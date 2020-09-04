@@ -1,0 +1,59 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'kr.co.seoulit'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.2'
+	
+	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+		
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+	compile files('src/main/resources/libs/ojdbc6.jar')
+	compile 'com.oracle:ojdbc6:11.2.0.3'
+	compileOnly 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	
+	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.1'
+	compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.5'
+	compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+	compile group: 'commons-io', name: 'commons-io', version: '2.5'
+	
+	runtime group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.5'
+	runtime group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.5'
+
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

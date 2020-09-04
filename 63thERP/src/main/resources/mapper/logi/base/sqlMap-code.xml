@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.co.seoulit.erp.logi.base.dao.LogiCodeDAO">
+<!-- 받음 to 객체위치를 적어줌 --><!-- 
+	 -->
+	<resultMap id="CodeResult" type="LogicodeTO">
+		<result property="divisionCodeNo" column="DIVISION_CODE_NO" />
+		<result property="codeType" column="CODE_TYPE" />
+		<result property="divisionCodeName" column="DIVISION_CODE_NAME"  />
+		<result property="codeChangeAvailable" column="CODE_CHANGE_AVAILABLE"  />
+		<result property="description" column="DESCRIPTION"  />
+<!-- 		<result property="codeDetailTOList" resultMap="codeDetail.CodeDetailResult" javaType="java.util.ArrayList" /> -->
+	</resultMap>
+
+	<select id="selectCodeList" resultMap="CodeResult">
+		SELECT * FROM CODE ORDER BY DIVISION_CODE_NO
+	</select>	
+	
+	<insert id="insertCode" parameterType="LogiCodeTO" > 
+		Insert into CODE
+		( DIVISION_CODE_NO , CODE_TYPE , DIVISION_CODE_NAME , CODE_CHANGE_AVAILABLE , DESCRIPTION )
+		values ( #{divisionCodeNo} , #{codeType} , #{divisionCodeName} , #{codeChangeAvailable#} , #{description} )
+	</insert>
+
+	<update id="updateCode" parameterType="LogiCodeTO">
+		UPDATE CODE SET
+		CODE_TYPE = #{codeType} , DIVISION_CODE_NAME = #{divisionCodeName} ,
+		CODE_CHANGE_AVAILABLE = #{codeChangeAvailable} , DESCRIPTION = #{description}
+		WHERE DIVISION_CODE_NO = #{divisionCodeNo}
+	</update>
+	
+	<delete id="deleteCode" parameterType="LogiCodeTO"> 
+		DELETE FROM CODE WHERE DIVISION_CODE_NO = #{divisionCodeNo}
+	</delete>
+	 		
+</mapper>
