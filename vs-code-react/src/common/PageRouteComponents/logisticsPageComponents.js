@@ -5,7 +5,9 @@
 // 영 업 관 리 =========================================================================================================================
 export { default as Estimate } from "ERP/LOGISTIC/Page/Estimate/EstimateContainer"; // 견적관리 -> 견적조회 및 수정
 export { default as EstimateRegister } from 'ERP/LOGISTIC/Page/Estimate/EstimateRegisterContainer';   // 견적관리 -> 견적조회 및 수정
-export { default as Contract } from "ERP/LOGISTIC/Page/Contract/Contract"; // 수주관리 ->
+//******************** 2020.09.04 63기 양지훈 수정 시작 ********************
+export { default as Contract } from "ERP/LOGISTIC/Page/Contract/ContractContainer"; // 수주관리
+//******************** 2020.09.04 63기 양지훈 수정 종료 ********************
 export { default as Delivery } from "ERP/LOGISTIC/Page/Delivery/Delivery"; // 납품관리 ->
 
 // 자 재 구 매 관 리 =========================================================================================================================

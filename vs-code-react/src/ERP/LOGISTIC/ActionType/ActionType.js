@@ -1,23 +1,56 @@
+//**************************************** 2020.09.03 양지훈 수정 시작 ****************************************
+//description:  견적 주석위치 변경 및 공백 변경
+//              ContractActionType 추가
+
+// 견적
 export const SEARCH_ESTIMATE = "src/ERP/LOGISTIC/Saga/Saga/SEARCH_ESTIMATE_SAGA";
 export const SEARCH_ESTIMATE_DETAIL = "src/ERP/LOGISTIC/Saga/Saga/SEARCH_ESTIMATE_DETAIL_SAGA";
 export const SEARCH_ESTIMATE_CODE = "src/ERP/LOGISTIC/Saga/Saga/SEARCH_ESTIMATE_CODE_SAGA";
-
 export const CALENDAR_REDUCER = "src/ERP/LOGISTIC/Saga/Reducer/CALENDAR_REDUCER";
 export const CALENDAR_SUCCESS = "src/ERP/LOGISTIC/Saga/Reducer/CALENDAR_SUCCESS";
 export const CALENDAR_FAILURE = "src/ERP/LOGISTIC/Saga/Reducer/CALENDAR_FAILURE";
-
 export const DIALOGDATA_SAGA = "src/ERP/LOGISTIC/Saga/Saga/DIALOGDATA_SAGA";
 export const DIALOGDATA_SUCCESS = "src/ERP/LOGISTIC/Saga/Saga/DIALOGDATA_SUCCESS";
 export const DIALOGDATA_FAILURE = "src/ERP/LOGISTIC/Saga/Saga/DIALOGDATA_FAILURE";
-
 export const AMOUNT_REDUCER = "src/ERP/LOGISTIC/Saga/Saga/AMOUNT_REDUCER";
 export const AMOUNT_SUCCESS = "src/ERP/LOGISTIC/Saga/Saga/AMOUNT_SUCCESS";
 export const AMOUNT_FAILURE = "src/ERP/LOGISTIC/Saga/Saga/AMOUNT_FAILURE";
 
-// export const customerName = createAction(types.ADD_ESTIMATE_NAME);
+//******************** 수주 ********************
+//수주등록 - 수주유형분류 셀클릭 - 수주유형분류 DATA
+export const GET_CODE_REQUEST='src/ERP/LOGISTIC/Reducer/GET_CODE_REQUEST';
+export const GET_CODE_SUCCESS='src/ERP/LOGISTIC/Reducer/GET_CODE_SUCCESS';
+export const GET_CODE_FAILURE='src/ERP/LOGISTIC/Reducer/GET_CODE_FAILURE';
 
+//수주등록 - 수주가능한견적
+export const GET_ESTIMATE_REQUEST='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_REQUEST';
+export const GET_ESTIMATE_SUCCESS='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_SUCCESS';
+export const GET_ESTIMATE_FAILURE='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_FAILURE';
+export const GET_ESTIMATE_UPDATE ='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_UPDATE';
+export const GET_ESTIMATE_DETAIL_REQUEST='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_DETAIL_REQUEST';
+export const GET_ESTIMATE_DETAIL_SUCCESS='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_DETAIL_SUCCESS';
+export const GET_ESTIMATE_DETAIL_FAILURE='src/ERP/LOGISTIC/Reducer/GET_ESTIMATE_DETAIL_FAILURE';
 
-//작업 지시 //
+// 수주등록 - 수주등록버튼
+export const ADD_CONTRACT_REQUEST='src/ERP/LOGISTIC/Reducer/ADD_CONTRACT_REQUEST';
+export const ADD_CONTRACT_SUCCESS='src/ERP/LOGISTIC/Reducer/ADD_CONTRACT_SUCCESS';
+export const ADD_CONTRACT_FAILURE='src/ERP/LOGISTIC/Reducer/ADD_CONTRACT_FAILURE';
+
+// 수주등록 - 견적취소버튼
+export const DELETE_ESTIMATE_REQUEST='src/ERP/LOGISTIC/Reducer/DELETE_ESTIMATE_REQUEST';
+export const DELETE_ESTIMATE_SUCCESS='src/ERP/LOGISTIC/Reducer/DELETE_ESTIMATE_SUCCESS';
+export const DELETE_ESTIMATE_FAILURE='src/ERP/LOGISTIC/Reducer/DELETE_ESTIMATE_FAILURE';
+
+// export const GET_CONTRACT_REQUEST='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_REQUEST';
+// export const GET_CONTRACT_SUCCESS='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_SUCCESS';
+// export const GET_CONTRACT_FAILURE='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_FAILURE';
+// export const GET_CONTRACT_DETAIL_REQUEST='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_DETAIL_REQUEST';
+// export const GET_CONTRACT__DETAIL_SUCCESS='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_DETAIL_SUCCESS';
+// export const GET_CONTRACT_DETAIL_FAILURE='src/ERP/LOGISTIC/Reducer/GET_CONTRACT_DETAIL_FAILURE';
+
+//**************************************** 2020.09.05 양지훈 수정 종료 ****************************************
+
+//******************** 작업 지시 ********************
 export const WORK_ORDER_REQUEST = "WORK_ORDER_REQUEST";
 export const WORK_ORDER_SUCCESS = "WORK_ORDER_SUCCESS";
 export const WORK_ORDER_FAILURE = "WORK_ORDER_FAILURE";

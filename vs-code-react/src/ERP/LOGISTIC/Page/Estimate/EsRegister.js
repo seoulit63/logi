@@ -61,7 +61,7 @@ const EsRegister = () => {
     const classes = useStyles();
 
     // 견적담당자 이름
-    const sessionId = sessionStorage.getItem('empNameInfo_token');
+    const sessionId = sessionStorage.getItem('empCodeInfo_token');
 
     // 견적 그리드 상태 변경
     const [esPositionGridApi, setEsPositionGridApi] = useState('');
@@ -418,9 +418,9 @@ const EsRegister = () => {
                 ).then( response => {
                     const result = response.data.result; // return array;
                     console.log(result);
-                    const resultMsg =   "< 견적 등록 내역 >   <br/><br/>"  +
-                                        "새로운 견적번호 : " + result.newEstimateNo + "</br></br>" +
-                                        "견적상세번호 : " + result.INSERT  + "</br></br>" +
+                    const resultMsg =   "< 견적 등록 내역 >   \r\n"  +
+                                        "새로운 견적번호 : " + result.newEstimateNo + "\r\n" +
+                                        "견적상세번호 : " + result.INSERT  + "\r\n" +
                                         "위와 같이 작업이 처리되었습니다";
                     alert(resultMsg);
                 })

@@ -232,6 +232,7 @@ const MpsRegister = ({ estimateNo, setEstimateNo }) => {
 
     let url1 = "http://localhost:8282/logi/production/convertContractDetailToMps.do";
     let MPSVal = JSON.stringify(D1rowData[0]);
+    console.log(MPSVal);
     
     
     const batchList = [{
