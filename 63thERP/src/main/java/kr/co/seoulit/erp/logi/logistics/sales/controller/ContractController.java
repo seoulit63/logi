@@ -4,40 +4,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import kr.co.seoulit.erp.logi.logistics.sales.serviceFacade.SalesServiceFacade;
-
 import kr.co.seoulit.erp.logi.logistics.sales.to.ContractDetailTO;
 import kr.co.seoulit.erp.logi.logistics.sales.to.ContractInfoTO;
 import kr.co.seoulit.erp.logi.logistics.sales.to.ContractTO;
 import kr.co.seoulit.erp.logi.logistics.sales.to.EstimateTO;
 
+
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/logi/logistics/sales/*", produces = "application/json")
+//************************* 2020.09.04 63기 양지훈 수정 시작 *************************
+//description:	url 변경
+@RequestMapping(value = "/logi/sales/*", produces = "application/json")
+//************************* 2020.09.04 63기 양지훈 수정 종료 *************************
 public class ContractController {
 
 	@Autowired
 	private SalesServiceFacade salesSF;
 
+	// Gson 생성
+	private static Gson gson = new GsonBuilder().serializeNulls().create();
 	private ModelMap modelMap = new ModelMap();
-
-	// gson 생성
-	//private static Gson gson = new GsonBuilder().serializeNulls().create(); // �냽�꽦媛믪씠 null �씤 �냽�꽦�룄 蹂��솚
 
 	// ------------------- 수주조회
 	@RequestMapping("/searchContract")
@@ -99,64 +98,61 @@ public class ContractController {
 		return modelMap;
 	}
 
-	// -------- 수주가능한 견적 조회----------------------------------
-	@GetMapping("/searchEstimateInContractAvailable")
-	public ModelMap searchEstimateInContractAvailable(@RequestParam String startDate, @RequestParam String endDate) {
-		System.out.println("controller _startDate=====" + startDate);
-		System.out.println("controller _endDate=====" + endDate);
+//************************* 2020.09.05 63기 양지훈 수정 시작 *************************
+//description:	ModelMap을 HashMap으로 변경;
 
-		ArrayList<EstimateTO> estimateListInContractAvailable = salesSF.getEstimateListInContractAvailable(startDate,
-				endDate);
-
-		modelMap.put("gridRowJson", estimateListInContractAvailable);
-		modelMap.put("errorCode", 1);
-		modelMap.put("errorMsg", "성공");
-
-		return modelMap;
-	}
-
-	// ---------------견적을 수주로 등록하기-------------------------------------
-	// contractTO를 다 estimateTO로 변경해야할듯
-	// 수주상태(contractStatus) + 오늘날짜(contractDate) + 담당자코드(personCodeInCharge) 만
-	// view에서 들고오고
-	// 견적 ---> 수주 로, 견적상세 ---> 수주상세 로 넣으면 됨
-	@RequestMapping("/addNewContract")
-	public HashMap<String, Object> addNewContract(@RequestParam String contractStatus,
-			@RequestParam String contractDate, @RequestParam String personCodeInCharge,
-			@RequestBody Map<String, ArrayList<ContractTO>> contractList) {
-
-		//
-
-		System.out.println("=============수주 컨트롤러  -   addNewContract  () 호출====================");
-		System.out.println("@@@@contractStatus======>" + contractStatus);
-		System.out.println("@@@@@contractDate=====>" + contractDate);
-		System.out.println("@@@@@@personCodeInCharge=======>" + personCodeInCharge);
-		System.out.println("@@@@@@@@@ contractList ======> " + contractList);	
-
+	/* 수주가능한 견적 조회 */
+	@RequestMapping("/searchEstimateInContractAvailable.do")
+	public HashMap<String, Object> searchEstimateInContractAvailable(
+			@RequestParam String startDate, @RequestParam String endDate) {
+//		System.out.println("	@ startDate=====>" + startDate);
+//		System.out.println("	@ endDate=====>" + endDate);
+		ArrayList<EstimateTO> estimateListInContractAvailable = 
+				salesSF.getEstimateListInContractAvailable(startDate, endDate);
+//		System.out.println("		@ searchEstimateInContractAvailable_estimateListInContractAvailable : "+estimateListInContractAvailable);
 		HashMap<String, Object> resultMap = new HashMap<>();
-
-		// EstimateTO workingContractTO = (batchList, EstimateTO.class); //수주를 등록하기 위해
-		// TO객체로 만드는 곳
-
-	//	resultMap = salesSF.addNewContract(contractDate, personCodeInCharge, contractList);
+		resultMap.put("gridRowJson", estimateListInContractAvailable);
+		resultMap.put("errorCode", 1);
+		resultMap.put("errorMsg", "성공");
 
 		return resultMap;
+	}
+//************************* 2020.09.05 63기 양지훈 수정 종료 *************************
+	
+//************************* 2020.09.04 63기 양지훈 수정 시작 *************************
+//	description:	메서드 내용 전부 변경
+//					view에서 넘기는 data안에 띄어쓰기가 있으면 값을 받지 못한다; 이유는 아직 모름;
 
+	/* 수주등록 */
+	@RequestMapping(value="/addNewContract.do", method=RequestMethod.POST)
+	public HashMap<String, Object> addNewContract(@RequestBody Map<String,Object> params) {
+		String batchList = params.get("batchList").toString();
+		String contractDate = params.get("contractDate").toString();
+		String personCodeInCharge = params.get("personCodeInCharge").toString();
+		ContractTO workingContractTO = gson.fromJson(batchList, ContractTO.class);
+//		System.out.println("	@ params======>" + params);
+//		System.out.println("	@ batchList======>" + batchList);
+//		System.out.println("	@ contractDate======>" + contractDate);
+//		System.out.println("	@ personCodeInCharge======>" + personCodeInCharge);
+//		System.out.println("	@ workingContractTO======>" + workingContractTO);
+		HashMap<String, Object> resultMap = new HashMap<>();
+		resultMap = salesSF.addNewContract(contractDate, personCodeInCharge, workingContractTO);
+		return resultMap;
 	}
 
-	// 안쓰임(견적삭제는 견적컨트롤러에 --> 수주를 수정하려면 견적부터 수정해야함)
-	@RequestMapping("/cancleEstimate.do")
-	public ModelMap cancleEstimate(HttpServletRequest request, HttpServletResponse response) {
+//************************* 2020.09.05 63기 양지훈 수정 종료 *************************
 
-		String estimateNo = request.getParameter("estimateNo");
+//************************* 2020.09.05 63기 양지훈 수정 시작 *************************
+//	description:	errorMsg utf-8로 변경
 
+	@RequestMapping(value="/cancelEstimate.do")
+	public ModelMap cancleEstimate(@RequestParam("estimateNo") String estimateNo) {
+		System.out.println("	@ params======>" + estimateNo);
 		salesSF.changeContractStatusInEstimate(estimateNo, "N");
-
+		modelMap.put("canceldEstimateNo", estimateNo);
 		modelMap.put("errorCode", 1);
-		modelMap.put("errorMsg", "�꽦怨�");
-		modelMap.put("cancledEstimateNo", estimateNo);
-
+		modelMap.put("errorMsg", "성공");
 		return modelMap;
 	}
-
+//************************* 2020.09.06 63기 양지훈 수정 종료 *************************
 }

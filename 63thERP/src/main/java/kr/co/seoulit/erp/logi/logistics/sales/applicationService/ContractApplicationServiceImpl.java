@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.co.seoulit.erp.logi.logistics.sales.dao.ContractDAO;
 import kr.co.seoulit.erp.logi.logistics.sales.dao.ContractDetailDAO;
 import kr.co.seoulit.erp.logi.logistics.sales.dao.EstimateDAO;
@@ -123,31 +125,45 @@ public ArrayList<ContractInfoTO> getContractList(String startDate, String endDat
 
 		return newContractNo.toString();
 	}
-
+//************************* 2020.09.04 63기 양지훈 수정 시작 *************************
+//	description:	파라미터 변경
+//					주석 변경
+//					
 	@Override
-	public HashMap<String, Object> addNewContract(String contractDate, String personCodeInCharge,
-			ContractTO workingContractBean) {
+	public HashMap<String, Object> addNewContract(
+			String contractDate, String personCodeInCharge, ContractTO workingContractBean) {
+		String newContractNo = getNewContractNo(contractDate);
+		System.out.println("		@ newContractNo: "+newContractNo);
+		System.out.println("		@ contractDate: "+contractDate);
+		System.out.println("		@ personCodeInCharge: "+personCodeInCharge);
+		System.out.println("		@ workingContractTOList: "+workingContractBean);
 		
-		HashMap<String, Object> param = new HashMap<>(); 
-			// �깉濡쒖슫 �닔二쇱씪�젴踰덊샇 �깮�꽦
-			String newContractNo = getNewContractNo(contractDate);//CO + contractDate + 01 <= 01�� 泥ル쾲吏몃씪�뒗 �쑜 2踰덉㎏�씠硫� 02 濡� 遺��뿬媛� �맖
-
-			workingContractBean.setContractNo(newContractNo); // �깉濡쒖슫 �닔二쇱씪�젴踰덊샇 �꽭�똿
-			workingContractBean.setContractDate(contractDate); // 酉곗뿉�꽌 �쟾�떖�븳 �닔二쇱씪�옄 �꽭�똿
-			workingContractBean.setPersonCodeInCharge(personCodeInCharge); // 酉곗뿉�꽌 �쟾�떖�븳 �닔二쇰떞�떦�옄肄붾뱶 �꽭�똿
-
-			contractDAO.insertContract(workingContractBean);
+		// 새로운 수주일련번호 생성
+		// CO + contractDate + 01 <= 01은 첫번째라는 뜻 2번째이며 02 로 부여가 됨
 			
-			// 寃ъ쟻 �뀒�씠釉붿뿉 �닔二쇱뿬遺� "Y" 濡� �닔�젙
-			changeContractStatusInEstimate(workingContractBean.getEstimateNo(), "Y");
+		HashMap<String, Object> param = new HashMap<>();
+		
+		// 새로운 수주일련번호 세팅
+		workingContractBean.setContractNo(newContractNo);
+		// 뷰에서 전달한 수주일자 세팅
+		workingContractBean.setContractDate(contractDate);
+		// 뷰에서 전달한 수주담당자코드 세팅
+		workingContractBean.setPersonCodeInCharge(personCodeInCharge);
 
-			param.put("estimateNo",workingContractBean.getEstimateNo());
-			param.put("contractNo",newContractNo);
-			
-			contractDetailDAO.procedureInsertContractDetail(param);							//CO ... �닔二쇱씪�젴踰덊샇
+		contractDAO.insertContract(workingContractBean);
+		
+		// 견적 테이블에 수주여부 "Y" 로 수정
+		changeContractStatusInEstimate(workingContractBean.getEstimateNo(), "Y");
 
+		param.put("estimateNo",workingContractBean.getEstimateNo());
+		param.put("contractNo",newContractNo);
+
+		//ES ... 견적일련번호 , CO ... 수주일련번호
+		contractDetailDAO.procedureInsertContractDetail(param);
+		/**/
 		return param;
 	}
+//************************* 2020.09.04 63기 양지훈 수정 종료 *************************
 
 	@Override
 	public HashMap<String, Object> batchContractDetailListProcess(ArrayList<ContractDetailTO> contractDetailTOList) {

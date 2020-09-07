@@ -11,8 +11,8 @@ public class ContractDetailTO extends BaseTO {
 	private String contractDetailNo;
 	private String contractNo;
 	private String itemCode;
-	private String itemName;	
-	private String unitOfContract; 
+//	private String itemName;
+	private String unitOfContract;
 	private String dueDateOfContract;	
 	private String estimateAmount;
 	private String stockAmountUse; 

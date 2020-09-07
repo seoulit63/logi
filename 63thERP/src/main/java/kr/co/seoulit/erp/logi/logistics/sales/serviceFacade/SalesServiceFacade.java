@@ -34,8 +34,13 @@ public interface SalesServiceFacade {
 	
 	public ArrayList<EstimateTO> getEstimateListInContractAvailable(String startDate, String endDate);
 
+//************************* 2020.09.04 63기 양지훈 수정 시작 *************************
+//	description:	파라미터 타입 & 이름 변경
+	
 	public HashMap<String, Object> addNewContract(String contractDate, String personCodeInCharge, ContractTO workingContractTO);
 
+//************************* 2020.09.04 63기 양지훈 수정 종료 *************************
+	
 	public HashMap<String, Object> batchContractDetailListProcess(ArrayList<ContractDetailTO> contractDetailTOList);
 	
 	public void changeContractStatusInEstimate(String estimateNo , String contractStatus);

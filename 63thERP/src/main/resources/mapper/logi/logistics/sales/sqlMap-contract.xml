@@ -48,16 +48,24 @@
 <!-- 	  <result property="estimateDetailTOList" select="estimateDetail.selectEstimateDetailList" column="{estimateNo=ESTIMATE_NO}" /> -->
 	</resultMap>
 
+	<!-- ************************* 2020.09.05 63기 양지훈 수정 시작 ************************* -->
+	<!-- description: 쿼리 select 값 변경 --> 
 	<select id="selectEstimateListInContractAvailable" parameterType="map" resultMap="estimateResult">
-		SELECT CONTRACT_STATUS,CUSTOMER_CODE,DESCRIPTION,EFFECTIVE_DATE,ESTIMATE_DATE,ESTIMATE_NO,
-		ESTIMATE_REQUESTER,PERSON_CODE_IN_CHARGE
-		FROM ESTIMATE
-		WHERE CONTRACT_STATUS IS NULL
-		AND TO_DATE(EFFECTIVE_DATE,'YYYY-MM-DD') >= TO_DATE(SYSDATE,'YYYY-MM-DD')
-		AND TO_DATE(ESTIMATE_DATE, 'YYYY-MM-DD')
-		BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate},'YYYY-MM-DD')
+		<![CDATA[
+			SELECT	ESTIMATE_NO
+					,CUSTOMER_CODE
+	          		,ESTIMATE_DATE
+	          		,EFFECTIVE_DATE
+	          		,PERSON_CODE_IN_CHARGE
+	          		,DESCRIPTION
+			FROM ESTIMATE
+			WHERE CONTRACT_STATUS IS NULL
+			AND TO_DATE(EFFECTIVE_DATE,'YYYY-MM-DD') >= TO_DATE(SYSDATE,'YYYY-MM-DD')
+			AND TO_DATE(ESTIMATE_DATE, 'YYYY-MM-DD')
+			BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate},'YYYY-MM-DD')
+		]]>
 	</select>
-
+	<!-- ************************* 2020.09.05 63기 양지훈 수정 종료 ************************* --> 
 	<select id="selectDeliverableContractListByDate" parameterType="map" resultMap="contractInfoResult">
 		WITH CODE_DETAIL_LIST AS ( SELECT DETAIL_CODE, DETAIL_CODE_NAME FROM
 		CODE_DETAIL ) ,

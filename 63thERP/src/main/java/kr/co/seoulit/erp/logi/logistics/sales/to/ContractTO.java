@@ -1,22 +1,27 @@
 package kr.co.seoulit.erp.logi.logistics.sales.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.seoulit.common.to.BaseTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+//************************* 2020.09.05 63기 양지훈 수정 시작 *************************
+//description:	필드 deliveryCompletionStatus 추가;
+//				필드 순서 변경
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class ContractTO extends BaseTO {
-	private String contractType;
-	private String estimateNo;
-	private String contractDate;
-	private String description;
-	private String contractRequester;
-	private String customerCode;
-	private String personCodeInCharge;
 	private String contractNo;
-	private List<ContractDetailTO> contractDetailTOList;
-
+	private String estimateNo;
+	private String contractType;
+	private String customerCode;
+	private String contractDate;
+	private String contractRequester;
+	private String personCodeInCharge;
+	private String description;
+	private String deliveryCompletionStatus;
+	private ArrayList<ContractDetailTO> contractDetailTOList;
 }
+//************************* 2020.09.05 63기 양지훈 수정 종료 *************************

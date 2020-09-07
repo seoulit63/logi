@@ -53,12 +53,16 @@
 			DESCRIPTION = #{description:NVARCHAR} 
 		WHERE ESTIMATE_NO = #{estimateNo}
 	</update>
-	
+<!-- ************************* 2020.09.05 63기 양지훈 수정 시작 ************************* -->
+<!-- description: CDATA 사용, contractStatus:VARCHAR -> contractStatus로 변경 -->
 	<update id="changeContractStatusOfEstimate" parameterType="map" >
-		UPDATE ESTIMATE SET 
-			CONTRACT_STATUS = #{contractStatus:VARCHAR}
-		WHERE ESTIMATE_NO = #{estimateNo}
+		<![CDATA[
+			UPDATE ESTIMATE SET 
+				CONTRACT_STATUS = #{contractStatus}
+			WHERE ESTIMATE_NO = #{estimateNo}
+		]]>
 	</update> 
+<!-- ************************* 2020.09.05 63기 양지훈 수정 종료 ************************* -->
 
 
 </mapper>

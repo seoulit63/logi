@@ -56,7 +56,7 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
 		return estimateAS.batchEstimateDetailListProcess(estimateDetailTOList);
 	}
 
-	// --------- ���ְ˻�
+	// --------- ���ְ˻�
 		@Override
 		public ArrayList<ContractInfoTO> getContractList(String startDate, String endDate) {
 
@@ -81,12 +81,17 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
 		return contractAS.getEstimateListInContractAvailable(startDate, endDate);
 	}
 
+//************************* 2020.09.04 63기 양지훈 수정 시작 *************************
+//	description:	파라미터 타입 & 이름 변경
+	
 	@Override
-	public HashMap<String, Object> addNewContract(String contractDate, String personCodeInCharge,
-			ContractTO workingContractTO) {
+	public HashMap<String, Object> addNewContract(
+			String contractDate, String personCodeInCharge, ContractTO workingContractTO) {
 
 		return contractAS.addNewContract(contractDate, personCodeInCharge, workingContractTO);
 	}
+	
+//************************* 2020.09.04 63기 양지훈 수정 종료 *************************
 
 	@Override
 	public HashMap<String, Object> batchContractDetailListProcess(ArrayList<ContractDetailTO> contractDetailTOList) {
